@@ -1,0 +1,55 @@
+﻿@using ProfessionConsultantCenter.Models
+@using System.Collections.Generic
+@model IEnumerable<User>
+
+@if (Model.Count() != 0)
+{
+<div style="background-color:rgba(255, 255, 255,0.4)">
+    <H2>Список консультантов:</H2>
+    <table border="1">
+        <tr>
+            <th class="col-md-3">
+                <center> Фамилия</center>
+            </th>
+            <th class="col-md-2">
+                <center>Имя</center>
+            </th>
+            <th class="col-md-2">
+                <center>Отчество</center>
+            </th>
+            <th class="col-md-3">
+                <center>Номер телефона</center>
+            </th>
+            <th class="col-md-2">
+
+            </th>
+        </tr>
+
+        @foreach (var consultant in Model)
+        {
+            <tr>
+                <td>
+                    @consultant.Surname
+                </td>
+                <td>
+                    <center>
+                        @consultant.Name
+                    </center>
+                </td>
+                <td style="text-align:right">
+                    @consultant.FatherName
+                </td>
+                <td style="text-align:right">
+                    @consultant.Phone
+                </td>
+                <td style="text-align:center">
+                    <a href="RemoveConsultant?consultantId=@consultant.Id"><font size="2">Удалить</font></a>
+                </td>
+            </tr>
+        }
+
+    </table>
+    
+</div>
+
+}

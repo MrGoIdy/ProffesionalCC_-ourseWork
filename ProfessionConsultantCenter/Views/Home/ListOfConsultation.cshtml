@@ -1,0 +1,36 @@
+﻿
+@using ProfessionConsultantCenter.Models
+@using System.Collections.Generic
+@model List<Consultation>
+
+<style>
+    footer {
+        display: none;
+    }
+
+    hr {
+        display: none;
+    }
+</style>
+
+<body style="color:black; background-image:url(https://img3.goodfon.ru/original/1920x1080/3/2f/shahmaty-figury-3d-otrazhenie.jpg?d=1)">
+    <div class="col-md-12">
+        <div class="col-md-5" style="background-color:rgba(255,255,255,0.7)">
+            <H2>Список консультаций:</H2>
+            @foreach (var consultation in Model)
+            {
+                <font size="4">
+                    @consultation.Date.ToShortDateString() @consultation.Time <span style="margin-left:10px">@Ajax.ActionLink(consultation.Name, "ConsultationInfo", new { id = consultation.Id }, new AjaxOptions { UpdateTargetId = "consultation" })</span>
+                </font>
+                <br />
+
+            }
+        </div>
+        <div class="col-md-7" id="consultation" style="background-color:rgba(255,255,255,0.7)">
+        </div>
+    </div>
+</body>
+@Scripts.Render("~/scripts/jquery-1.10.2.min.js")
+@Scripts.Render("~/scripts/jquery.unobtrusive-ajax.min.js")
+
+

@@ -1,0 +1,32 @@
+﻿
+@model ProfessionConsultantCenter.Models.Consultation
+
+    <h3>@Model.Name <small>@Model.Date.ToShortDateString()</small></h3>
+    <hr />
+
+    @{ProfessionConsultantCenter.Models.User consultant = Model.Users.FirstOrDefault(x => x.Role.Name != "User");}
+
+
+    <h4>По адресу @Model.Adres в @Model.Time. Количество мест: @Model.Places</h4>
+    @if (consultant != null)
+    {
+        <h4>Консультант: @consultant.Surname @consultant.Name @consultant.FatherName</h4>
+
+    }
+    else
+    {
+        <div style="color:orange">
+            <h3>Консультант еще не назначен</h3>
+        </div>
+    }
+    <h4>
+        Участников (@Model.Users.Where(x => x.Role.Name == "User").Count() из @Model.Places)
+    </h4>
+    <br />
+    <center>
+        @Html.ActionLink("Перейти на страницу консультации", "Consultation", new
+{
+    id = Model.Id
+})
+    </center>
+   

@@ -1,0 +1,147 @@
+﻿@model ProfessionConsultantCenter.Models.Consultation
+    
+@{int counter = 0; }
+
+
+<body style="color:white; background-image:url(http://fluper.ru/ffh/50/chernyy_royal_na_chernom_fone_1680x1050.jpg)">
+    <h2>@Model.Name <small>@Model.Date.ToShortDateString()</small></h2>
+    <hr />
+
+    @{ProfessionConsultantCenter.Models.User consultant = Model.Users.FirstOrDefault(x => x.Role.Name != "User");}
+
+
+    <h3>По адресу @Model.Adres в @Model.Time. Количество мест: @Model.Places</h3>
+    @if (consultant != null)
+    {
+            <h3>Консультант: @consultant.Surname @consultant.Name @consultant.FatherName  (@consultant.Phone)</h3>
+
+    }
+    else
+    {
+        <div style="color:orange">
+            <h3>Консультант еще не назначен</h3>
+        </div>
+    }
+    <h3>
+    Участники (@Model.Users.Where(x => x.Role.Name=="User").Count() из @Model.Places): </h3>
+    <br />
+    <table>
+        <tbody>        
+            @foreach (var User in Model.Users)
+            {
+                if (User.Role.Name == "User")
+                {
+                    counter += 1;
+                <tr>
+                    <td class="col-md-8" ><font size="4"> @counter. @User.Surname @User.Name @User.FatherName</font></td>
+                    <td class="col-md-4" ><font size="4"> @User.BirthDay.ToShortDateString()</font></td>
+                </tr>
+                }
+            }
+
+        </tbody>
+    </table>
+    <br />
+    <br />
+    <center>
+        @{ProfessionConsultantCenter.Models.User user = new ProfessionConsultantCenter.Models.ProfessionConsultantDB().Users.FirstOrDefault(x => x.Login == User.Identity.Name); }
+
+
+        @if (user.Role.Name == "User" && Model.Users.Count() <= Model.Places && Model.Date > DateTime.Now.Date && Model.Users.FirstOrDefault(x => x.Login == User.Identity.Name) == null)
+        {
+            <font size="3">
+       @Ajax.ActionLink("Записаться на консультацию", "RegistryUserInConsultation", "Home", new
+       {
+           id = Model.Id
+       }, new AjaxOptions()
+       {
+           UpdateTargetId = "Main",
+           InsertionMode = InsertionMode.Replace,
+           HttpMethod = "GET",
+           LoadingElementId = "busycycle"
+       })
+              </font>
+        }
+        else
+        {
+
+            if (user.Role.Name == "User" && Model.Date > DateTime.Now.Date && Model.Users.FirstOrDefault(x => x.Login == User.Identity.Name) != null)
+            {
+                <font size="3">
+                    @Ajax.ActionLink("Отписаться от консультации", "RemoveUserInConsultation", "Home", new
+               {
+                   id = Model.Id
+               }, new AjaxOptions()
+               {
+                   UpdateTargetId = "Main",
+                   InsertionMode = InsertionMode.Replace,
+                   HttpMethod = "GET",
+                   LoadingElementId = "busycycle"
+               })
+                </font>
+            }
+        }
+
+    
+        @if (consultant == null) {
+            if (Model.Users.Count() < Model.Places && Model.Date > DateTime.Now.Date && Model.Users.FirstOrDefault(x => x.Login == User.Identity.Name) == null)
+            {
+                if (user != null)
+                {
+                    if ((user.Role.Name != "User"))
+                    {
+            <font size="3">
+                
+                @Ajax.ActionLink("Стать консультантом", "RegistryUserInConsultation", "Home", new
+           {
+               id = Model.Id
+           }, new AjaxOptions()
+           {
+               UpdateTargetId = "Main",
+               InsertionMode = InsertionMode.Replace,
+               HttpMethod = "GET",
+               LoadingElementId = "busycycle"
+           }, new { style = "color:orange" })
+            </font>
+                    }
+
+                }
+            }
+        }
+        
+            @if (consultant != null && Model.Users.FirstOrDefault(x => x.Role.Name != "User") != null)
+            {
+                if (Model.Users.Count() < Model.Places && Model.Date > DateTime.Now.Date && Model.Users.FirstOrDefault(x => x.Login == User.Identity.Name) != null)
+                {
+                    if (user != null)
+                    {
+                        if ((user.Role.Name == "Consultant" || user.Role.Name == "Admin") && user.Name == consultant.Name)
+                        {
+                            <font size="3">
+                                
+                                @Ajax.ActionLink("Перестать быть консультантом", "RemoveUserInConsultation", "Home", new
+           {
+               id = Model.Id
+           }, new AjaxOptions()
+           {
+               UpdateTargetId = "Main",
+               InsertionMode = InsertionMode.Replace,
+               HttpMethod = "GET",
+               LoadingElementId = "busycycle"
+           }, new { style = "color:red" })
+                            </font>
+                        }
+
+                    }
+                }
+            }
+        
+
+
+
+
+
+
+
+    </center>
+</body>

@@ -1,0 +1,85 @@
+﻿@using ProfessionConsultantCenter.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Вход в систему";
+}
+<body style="background-image:url(http://www.psychologos.ru/uploads/tests/64v5/4a63qpme.jpg);">
+    <h2>@ViewBag.Title.</h2>
+    <div class="row">
+        <div class="col-md-8">
+            <section id="loginForm">
+                @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                    @Html.AntiForgeryToken()
+                    <h4>Введите Ваши идентификационные данные для входа в систему</h4>
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Email, "Почта", new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Password, "Пароль", new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <div class="checkbox">
+                                @Html.CheckBoxFor(m => m.RememberMe)
+                                @Html.LabelFor(m => m.RememberMe,"Запомнить меня")
+                            </div>
+                        </div>
+                    </div>
+
+                    
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Войти" class="btn btn-default" />
+                        </div>
+                    </div>
+                   
+                 
+                }
+
+               
+
+            </section>
+        </div>
+        
+    </div>
+   </body>
+    @section Scripts {
+        <script>
+
+
+            $(function () {
+                debugger;
+                var check = true;
+            var linkToEmployeer = '/Account/LoginEmployee',
+            linkToUser = '/Account/Login',
+        form = document.forms[0];
+		checkbox = $('#EmployeerCheckBox');
+		$("#linkChanger").click(function() {
+		    if (check) {
+		        form.action = linkToEmployeer;
+		        check = false;
+		    return true;
+		} else {
+		        form.action = linkToUser;
+		        check = true;
+		        return true;
+		}
+	});
+});
+
+</script>
+        @Scripts.Render("~/bundles/jqueryval")
+    }

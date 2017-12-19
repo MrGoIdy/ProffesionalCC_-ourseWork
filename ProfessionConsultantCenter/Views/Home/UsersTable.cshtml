@@ -1,0 +1,15 @@
+﻿@using ProfessionConsultantCenter.Models
+@model IEnumerable<User>
+ Участники (@Model.Count()):
+<br />
+<table>
+    <tbody>
+        @foreach (var user in Model)
+            {
+            <tr>
+                <td style="border-style:ridge; border-color:white"> @user.Surname @user.Name @user.FatherName</td>
+                <td style="border-style:ridge; border-color:white"> @user.BirthDay.ToShortDateString()</td>
+            </tr>
+        }
+    </tbody>
+</table>

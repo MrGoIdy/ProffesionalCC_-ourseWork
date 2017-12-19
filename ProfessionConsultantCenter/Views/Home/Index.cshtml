@@ -1,0 +1,51 @@
+﻿@using ProfessionConsultantCenter.Models
+@model IEnumerable<Consultation>
+
+@{
+    ViewBag.Title = "Главная";
+}
+
+<body  style="color:white; background-image:url(https://img3.goodfon.ru/original/1920x1080/3/2f/shahmaty-figury-3d-otrazhenie.jpg?d=1)">
+    
+    <div class="jumbotron" style="background-color: rgba(0, 0, 0,0.5)">
+        <img align="left" src="https://pp.userapi.com/c841539/v841539756/22036/uEw-Spk8iy4.jpg" style="width:178px; height:178px; border-radius: 10px; margin: 14px" />
+        <h2>Консультант центр Александра Золотарёва</h2>
+        <p class="lead">Консультант центр Александра Золотарёва - это Ваш шанс найти себя в этом огромом мире, возможность расширить рамки познания, забыть о серой рутине</p>
+        <p><a href="#" class="btn btn-primary btn-lg">Подробнее от консультациях &raquo;</a></p><marquee>Абсолютно бесплатно!</marquee>
+    </div>
+
+    <div style="display:table;">
+        <center>
+            <div class="col-md-4" style="height:220px; display: table-cell; background-color: rgba(255, 0, 0, 0.6);">
+                
+                <h2>Присоединяйтесь!</h2>
+                <p>
+                    Специально для новых клиентов проводятся бесплатные консультации, которые позволят Вам найти то, к чему
+                    Вы стремитесь, какие рамки Вы готовы преодолеть.
+                </p>
+                <center> <p><a class="btn btn-default" href="/Account/Register">Зарегистрироваться на сайте &raquo;</a></p></center>
+
+            </div>
+
+            <div class="col-md-4" style="height:220px; display:table-cell; background-color:rgba(0, 38, 255, 0.6);">
+                <h2>Развивайтесь!</h2>
+                <p>
+                    Выбирайте самые интересующие Вас консультации и тренинги, чтобы вместе с лучшими консультантами обсудить интересующие Вас темы
+                    и вопросы
+                </p>
+                <center> <p>>@Html.ActionLink("Подобрать консультацию", "Calendar", new { date = DateTime.Now })</p></center>
+
+            </div>
+            <div class="col-md-4" style="height:220px; display: table-cell; background-color: rgba(65, 154, 52, 0.6)">
+                <h2>Достигайте вершин!</h2>
+                <p>
+                    После прохождения курса треннингов одного из направлений Вам предложать пройти отбор и стать частью нашей команды, Вы сможете
+                    консультировать людей по Вашим любимым темам и направлениям
+                </p>
+                <center> <p><a class="btn btn-default" href="#">О трудоустройстве &raquo;</a></p></center>
+
+            </div>
+
+        </center>
+    </div>
+</body>

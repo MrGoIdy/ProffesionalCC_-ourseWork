@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "Admin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<body style="color:black; background-image:url(https://img3.goodfon.ru/original/1920x1080/3/2f/shahmaty-figury-3d-otrazhenie.jpg?d=1)">
+
+    <h2>Панель администратора</h2><font size="4">
+
+     @Html.ActionLink("Добавить консультацию", "RegisterConsultation", "Home", htmlAttributes: new { id = "registerLink" })<br />
+
+    @Html.ActionLink("Добавить консультанта", "Register", "Account", new { check = true }, htmlAttributes: new { id = "registerLink" })
+                                      <br />
+                                      <br />
+                                      @Html.Action("ConsultationList","Home", new { page = 1 }) 
+    <hr /> 
+                                      @Html.Action("ConsultantList", "Home", new { page = 1 })
+                                      
+                                                            
+</font>
+    </body>

@@ -1,0 +1,129 @@
+﻿@model ProfessionConsultantCenter.Models.User
+@{
+    ViewBag.Title = "Регистрация";
+}
+
+<h2>@ViewBag.Title.</h2>
+
+
+<body style="background-image:url(http://www.psychologos.ru/uploads/tests/64v5/4a63qpme.jpg);">
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    if (User != null)
+    {
+        if (new ProfessionConsultantCenter.Models.ProfessionConsultantDB().Users.FirstOrDefault(x => x.Login == User.Identity.Name) != null) {
+            if (new ProfessionConsultantCenter.Models.ProfessionConsultantDB().Users.FirstOrDefault(x => x.Login == User.Identity.Name).Role.Name == "Admin")
+            {
+            <div style="color:orangered"><h4>Регистрация нового консультанта</h4></div>
+            }
+        }
+    }
+    else
+    {
+    <h4>Создайте свой аккаунт для начала работы с нашим консультант-центром</h4>
+    }
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(m => m.Login, "Почта" ,  new { @class = "col-md-3 control-label" })
+        <div class="col-md-9">
+            @Html.TextBoxFor(m => m.Login, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Login)
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Password, "Пароль", new { @class = "col-md-3 control-label" })
+        <div class="col-md-9">
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Password)
+        </div>
+    </div>
+
+    <div class="form-group">
+            @Html.LabelFor(model => model.Name, "Имя", new { @class = "control-label col-md-3" })
+        <div class="col-md-9">
+            @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+       
+        </div>
+    </div>
+
+    
+        <div class="form-group">
+                @Html.LabelFor(model => model.FatherName, "Отчество",  new { @class = "control-label col-md-3" })
+            <div class="col-md-8">
+                @Html.TextBoxFor(model => model.FatherName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.FatherName)
+            </div>
+        </div>
+
+        <div class="form-group">
+          
+                @Html.LabelFor(model => model.Surname, "Фамилия", new { @class = "control-label col-md-3" })
+            
+            <div class="col-md-9">
+                @Html.TextBoxFor(model => model.Surname, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Surname)
+            </div>
+        </div>
+
+
+            <div class="form-group">
+               
+                    @Html.LabelFor(model => model.Phone, "Номер телефона", new { @class = "control-label col-md-3" })
+                
+                <div class="col-md-9">
+                    @Html.TextBoxFor(model => model.Phone, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Phone)
+                </div>
+            </div>
+                <div class="form-group">
+                    
+                        @Html.LabelFor(model => model.Adres, "Адрес проживания", new { @class = "control-label col-md-3" })
+                    
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(model => model.Adres, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Adres)
+                    </div>
+                </div>
+                    <div class="form-group">
+                      
+                            @Html.LabelFor(model => model.BirthDay, "Дата рождения", new { @class = "control-label col-md-3" })
+                     
+                        <div class="col-md-9">
+                            @Html.TextBoxFor(model => model.BirthDay, new { @class = "form-control", type = "date" })
+                            @Html.ValidationMessageFor(model => model.BirthDay)
+                        </div>
+                    </div>
+    if (User!=null)
+    {
+        if (new ProfessionConsultantCenter.Models.ProfessionConsultantDB().Users.FirstOrDefault(x => x.Login == User.Identity.Name)!=null)
+        {
+            if (new ProfessionConsultantCenter.Models.ProfessionConsultantDB().Users.FirstOrDefault(x => x.Login == User.Identity.Name).Role.Name == "Admin")
+            {
+        <input id="Role_Name" name="Role.Name" type="hidden" value="Consultant">
+            }
+            else
+            {
+                <input id="Role_Name" name="Role.Name" type="hidden" value="User">
+            }
+        }
+        else
+        {
+            <input id="Role_Name" name="Role.Name" type="hidden" value="User">
+        }
+    }
+    else
+    {
+                    <input  id="Role_Name" name="Role.Name" type="hidden" value="User">
+    }
+    <div class="form-group">
+                            <div class="col-md-offset-3 col-md-9">
+                                <input type="submit" class="btn btn-default" value="Зарегистрироваться" />
+                            </div>
+                        </div>
+                        }
+    </body>
+                        @section Scripts {
+                            @Scripts.Render("~/bundles/jqueryval")
+                        }

@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="S" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+  <EntityContainer Name="SContainer" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="UsersSet" EntityType="S.Users" />
+    <EntitySet Name="RolesSet" EntityType="S.Roles" />
+    <EntitySet Name="ConsultationsSet" EntityType="S.Consultations" />
+    <EntitySet Name="UserConsultationSet" EntityType="S.UserConsultation" />
+    <EntitySet Name="EmployeesSet" EntityType="S.Employees" />
+    <AssociationSet Name="EmployeesConsultations" Association="S.EmployeesConsultations">
+      <End Role="Employees" EntitySet="EmployeesSet" />
+      <End Role="Consultations" EntitySet="ConsultationsSet" />
+    </AssociationSet>
+    <AssociationSet Name="UsersUserConsultation" Association="S.UsersUserConsultation">
+      <End Role="Users" EntitySet="UsersSet" />
+      <End Role="UserConsultation" EntitySet="UserConsultationSet" />
+    </AssociationSet>
+    <AssociationSet Name="UserConsultationConsultations" Association="S.UserConsultationConsultations">
+      <End Role="UserConsultation" EntitySet="UserConsultationSet" />
+      <End Role="Consultations" EntitySet="ConsultationsSet" />
+    </AssociationSet>
+    <AssociationSet Name="RolesEmployees" Association="S.RolesEmployees">
+      <End Role="Roles" EntitySet="RolesSet" />
+      <End Role="Employees" EntitySet="EmployeesSet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Surname" Type="String" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" />
+    <Property Name="FatherName" Type="String" Nullable="false" />
+    <Property Name="BirthDay" Type="String" Nullable="false" />
+    <Property Name="Adres" Type="String" Nullable="false" />
+    <Property Name="Phone" Type="String" Nullable="false" />
+    <Property Name="Password" Type="String" Nullable="false" />
+    <Property Name="Login" Type="String" Nullable="false" />
+    <NavigationProperty Name="UserConsultation" Relationship="S.UsersUserConsultation" FromRole="Users" ToRole="UserConsultation" />
+  </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" />
+    <NavigationProperty Name="Employees" Relationship="S.RolesEmployees" FromRole="Roles" ToRole="Employees" />
+  </EntityType>
+  <EntityType Name="Consultations">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Date" Type="String" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" />
+    <Property Name="Places" Type="String" Nullable="false" />
+    <Property Name="ConsultantId" Nullable="false" Type="String" />
+    <Property Name="Adres" Type="String" Nullable="false" />
+    <NavigationProperty Name="Employees" Relationship="S.EmployeesConsultations" FromRole="Consultations" ToRole="Employees" />
+    <NavigationProperty Name="UserConsultation" Relationship="S.UserConsultationConsultations" FromRole="Consultations" ToRole="UserConsultation" />
+    <Property Name="Time" Type="String" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserConsultation">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="User" Type="String" Nullable="false" />
+    <Property Name="Consultation" Type="String" Nullable="false" />
+    <NavigationProperty Name="Users" Relationship="S.UsersUserConsultation" FromRole="UserConsultation" ToRole="Users" />
+    <NavigationProperty Name="Consultations" Relationship="S.UserConsultationConsultations" FromRole="UserConsultation" ToRole="Consultations" />
+  </EntityType>
+  <EntityType Name="Employees">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Surname" Type="String" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" />
+    <Property Name="FatherName" Type="String" Nullable="false" />
+    <Property Name="Phone" Type="String" Nullable="false" />
+    <Property Name="Password" Type="String" Nullable="false" />
+    <Property Name="Login" Type="String" Nullable="false" />
+    <Property Name="Role" Type="String" Nullable="false" />
+    <NavigationProperty Name="Consultations" Relationship="S.EmployeesConsultations" FromRole="Employees" ToRole="Consultations" />
+    <NavigationProperty Name="Roles" Relationship="S.RolesEmployees" FromRole="Employees" ToRole="Roles" />
+  </EntityType>
+  <Association Name="EmployeesConsultations">
+    <End Type="S.Employees" Role="Employees" Multiplicity="1" />
+    <End Type="S.Consultations" Role="Consultations" Multiplicity="*" />
+  </Association>
+  <Association Name="UsersUserConsultation">
+    <End Type="S.Users" Role="Users" Multiplicity="1" />
+    <End Type="S.UserConsultation" Role="UserConsultation" Multiplicity="*" />
+  </Association>
+  <Association Name="UserConsultationConsultations">
+    <End Type="S.UserConsultation" Role="UserConsultation" Multiplicity="1" />
+    <End Type="S.Consultations" Role="Consultations" Multiplicity="*" />
+  </Association>
+  <Association Name="RolesEmployees">
+    <End Type="S.Roles" Role="Roles" Multiplicity="1" />
+    <End Type="S.Employees" Role="Employees" Multiplicity="*" />
+  </Association>
+</Schema>
